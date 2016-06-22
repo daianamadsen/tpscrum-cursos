@@ -10,13 +10,18 @@ public class Tema {
     public Tema() {
     }
 
-    public Tema(String sigla, String nombre) {
+    public Tema(String sigla, String nombre, String descripcion) {
         this.sigla = sigla;
         this.nombre = nombre;
+        this.descripcion = descripcion;
     }
     
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getSigla() {
