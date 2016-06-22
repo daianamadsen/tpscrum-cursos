@@ -39,7 +39,7 @@ public class TemaDAO extends GenericDAO {
         List<Tema> temas = null;
         try {
             beginTransaction();
-            temas = sesion.createQuery("from tema").list(); 
+            temas = sesion.createQuery("from Tema").list(); 
             endTransaction();
         } catch(HibernateException he) {
             throw he;
