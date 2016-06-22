@@ -16,6 +16,6 @@
     <property name="show_sql">true</property>
     <property name="hbm2ddl.auto">update</property>
     <!-- Archivos de mapeo -->
-    <mapping resource="mapeos/Tema.hbm.xml"/>
+    <mapping resource="mapeos/Tema.hbm.xml"/><mapping resource="mapeos/Dependencia.hbm.xml" />
   </session-factory>
 </hibernate-configuration>
