@@ -5,4 +5,4 @@ Aplicación que permite crear temas y dependencias entre temas correlativos para
 Requisitos:
   - Instalar MySQL 5.0 (o superior)
   - Crear una base de datos llamada "tpscrum_cursos" vacía
-  - Instalar GraphViz
+  - Instalar GraphViz 2.38 en la ruta c:/Program Files (x86)/
