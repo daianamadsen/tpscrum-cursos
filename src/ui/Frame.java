@@ -294,13 +294,11 @@ public class Frame extends javax.swing.JFrame {
     
     //BOTÓN TEMAS
     private void boton_temasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_temasActionPerformed
-        FrameTema.showInputTema();
         visible(1);
     }//GEN-LAST:event_boton_temasActionPerformed
 
     //BOTÓN DEPENDENCIAS
     private void boton_dependenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_dependenciasActionPerformed
-        
         visible(2);
     }//GEN-LAST:event_boton_dependenciasActionPerformed
 
@@ -312,14 +310,15 @@ public class Frame extends javax.swing.JFrame {
 
     //BOTÓN AGREGAR TEMA
     private void boton_agregar_temaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_agregar_temaActionPerformed
-        
-        
+        FrameTema.showInputTema();
+        //actualizar temas
     }//GEN-LAST:event_boton_agregar_temaActionPerformed
 
     //BOTÓN AGREGAR DEPENDENCIA
     private void boton_agregar_dependenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_agregar_dependenciaActionPerformed
         
         
+        //actualizar dependencias
     }//GEN-LAST:event_boton_agregar_dependenciaActionPerformed
 
     //CLICK SOBRE TABLA TEMAS
@@ -328,6 +327,7 @@ public class Frame extends javax.swing.JFrame {
         if (evt.getClickCount() == 2) {
             
             
+            //actualizar temas
         }
     }//GEN-LAST:event_tabla_temasMouseClicked
 
@@ -337,6 +337,7 @@ public class Frame extends javax.swing.JFrame {
         if (evt.getClickCount() == 2) {
             
             
+            //actualizar dependencias
         }
     }//GEN-LAST:event_tabla_dependenciasMouseClicked
 
