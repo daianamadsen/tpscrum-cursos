@@ -5,16 +5,24 @@ import core.TemaDAO;
 
 import entidades.Dependencia;
 import entidades.Tema;
+
 import input_output.Exportar;
 
 import java.awt.Toolkit;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class Frame extends javax.swing.JFrame {
+    
+    private static final String FILE = "Grafo";
+    private static final String EXTENSION = ".pdf";
 
     public Frame() {
         initComponents();
@@ -366,9 +374,34 @@ public class Frame extends javax.swing.JFrame {
 
     //BOTÓN EXPORTAR GRAFO
     private void boton_exportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_exportarActionPerformed
-        Exportar exp = new Exportar();
-        exp.exportarPDF();
+        JFileChooser chooser = new JFileChooser(); 
+        chooser.setCurrentDirectory(new java.io.File(".")); //Posición inicial
+        chooser.setDialogTitle("Seleccionar path destino");
+        chooser.setAcceptAllFileFilterUsed(false); //No permite selección múltiple
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            
+            //Ruta:
+            String path = chooser.getSelectedFile().toString()+"\\";
+            //Archivo:
+            String filename = FILE+EXTENSION;
+            
+            //Si ya existe se renombra con (1) (2) (3) etc.
+            int i = 1;
+            Path fullpath = Paths.get(path+filename);
+            boolean existe = Files.exists(fullpath);
+            while (existe) {
+                filename = FILE +"("+ ++i +")" + EXTENSION;
+                fullpath = Paths.get(path+filename);
+                existe = Files.exists(fullpath);
+            }
+            
+            //Grafo
+            Exportar exp = new Exportar();
+            exp.exportarPDF();
         
+        }
     }//GEN-LAST:event_boton_exportarActionPerformed
 
     //BOTÓN AGREGAR TEMA
