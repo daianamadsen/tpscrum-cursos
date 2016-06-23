@@ -1,7 +1,5 @@
 package ui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -10,11 +8,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-
-import antlr.collections.List;
 import core.DependenciaDAO;
 import core.TemaDAO;
 import entidades.Dependencia;
@@ -28,7 +21,7 @@ public class FrameDependencia extends JFrame {
 	    private static JComboBox<Tema> cTema;
 	    private static JComboBox<Tema> cCorrelativa;
 	    
-	    private static Object[] buildDialog(String tema, String correlativa) {
+	    private static Object[] buildDialog() {
 	        //Cuadros de texto
 	    	TemaDAO handler = new TemaDAO();
 	    	ArrayList<Tema> lista = (ArrayList<Tema>) handler.read();
@@ -39,29 +32,33 @@ public class FrameDependencia extends JFrame {
 	    	Tema[] aux = (Tema[]) lista.toArray();
 	    	cTema = new JComboBox<Tema>(aux);
 	    	cCorrelativa = new JComboBox<Tema>(aux);
-	        //Precarga   
-	    	if (!tema.equals("null")){
-	    		cTema.
-	    	}
-	    	if (!correlativa.equals("null")){
-		    	
-	    	}
-	    	
 	        //Msg
 	        Object[] msg = {
 	            "Tema:", cTema,
+                    " ",
 	            "Correlativa:", cCorrelativa,
 	            " "
 	        };
 	        return msg;
 	    }
+            
+            private static Object[] buildDialog(Dependencia dependencia) {
+                //Msg
+                Object[] msg = {
+                    "Tema:" + dependencia.getTema().toString(),
+                    " ",
+                    "Tema correlativo:" + dependencia.getCorrelativo().toString(),
+                    " "
+                };
+                return msg;
+            }
 	    
 	    //nueva dep
 	    public static boolean showInputDependencia() {
 	        //Dialog
-	        Object[] msg = buildDialog("", "");
-	        Object[] options = {"Guardar correlativa", "Cancelar"};
-	        int option = JOptionPane.showOptionDialog(new java.awt.Frame(), msg, "Nueva Correlativa", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, iAdd, options, options[1]);
+	        Object[] msg = buildDialog();
+	        Object[] options = {"Guardar Dependencia", "Cancelar"};
+	        int option = JOptionPane.showOptionDialog(new java.awt.Frame(), msg, "Nueva Dependencia", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, iAdd, options, options[1]);
 	        if (option == JOptionPane.OK_OPTION) {
 	            //Creación de correlativa
 	        	Tema tema = cTema.getItemAt(cTema.getSelectedIndex());
@@ -77,13 +74,13 @@ public class FrameDependencia extends JFrame {
 	    }
 	    
 	    //eliminar o ver dep
-	    public static boolean showInputDependencia(Dependencia tema,Dependencia correlativa) {
+	    public static boolean showInputDependencia(Dependencia dependencia) {
 	        //Dialog
-	    	Object[] msg = buildDialog(tema.getSigla(), tema.getNombre(), tema.getDescripcion());
-	        Object[] options = {"Eliminar Tema", "Cancelar"};
-	        int option = JOptionPane.showOptionDialog(new java.awt.Frame(), msg, "Editar Tema", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, iEdit, options, options[2]);
-	        if (option == JOptionPane.YES_OPTION) {
-	            //Eiminación de Tema
+	    	Object[] msg = buildDialog(dependencia);
+	        Object[] options = {"Eliminar Dependencia", "Cancelar"};
+	        int option = JOptionPane.showOptionDialog(new java.awt.Frame(), msg, "Eliminar Dependencia", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, iEdit, options, options[1]);
+	        if (option == JOptionPane.OK_OPTION) {
+	            //Eiminación de correlativa
 	            DependenciaDAO handler = new DependenciaDAO();
 	            handler.delete(dependencia);
 	            return true;
@@ -96,7 +93,6 @@ public class FrameDependencia extends JFrame {
 	        return new ImageIcon(resource);
 	    }
 	    
-	}
+	
 
- 
 }
