@@ -5,7 +5,6 @@ import java.util.List;
 import org.hibernate.HibernateException;
 
 import entidades.Dependencia;
-import entidades.Tema;
 
 public class DependenciaDAO extends GenericDAO{
 	

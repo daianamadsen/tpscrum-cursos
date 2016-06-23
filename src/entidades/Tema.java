@@ -48,4 +48,9 @@ public class Tema {
         this.descripcion = descripcion;
     }
     
+    @Override
+    public String toString(){
+        return getSigla() + " - " + getNombre();
+    }
+    
 }

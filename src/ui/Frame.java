@@ -70,6 +70,11 @@ public class Frame extends javax.swing.JFrame {
         boton_exportar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         boton_exportar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/boton-activo.png"))); // NOI18N
         boton_exportar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/boton-activo.png"))); // NOI18N
+        boton_exportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton_exportarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel_topLayout = new javax.swing.GroupLayout(panel_top);
         panel_top.setLayout(panel_topLayout);
@@ -130,6 +135,11 @@ public class Frame extends javax.swing.JFrame {
             }
         });
         tabla_temas.setSelectionBackground(new java.awt.Color(102, 153, 255));
+        tabla_temas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_temasMouseClicked(evt);
+            }
+        });
         scroll_temas.setViewportView(tabla_temas);
 
         javax.swing.GroupLayout panel_temasLayout = new javax.swing.GroupLayout(panel_temas);
@@ -190,6 +200,11 @@ public class Frame extends javax.swing.JFrame {
             }
         });
         tabla_dependencias.setSelectionBackground(new java.awt.Color(102, 153, 255));
+        tabla_dependencias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_dependenciasMouseClicked(evt);
+            }
+        });
         scroll_dependencias.setViewportView(tabla_dependencias);
 
         javax.swing.GroupLayout panel_dependenciasLayout = new javax.swing.GroupLayout(panel_dependencias);
@@ -277,21 +292,53 @@ public class Frame extends javax.swing.JFrame {
         }
     }
     
+    //BOTÓN TEMAS
     private void boton_temasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_temasActionPerformed
+        
         visible(1);
     }//GEN-LAST:event_boton_temasActionPerformed
 
+    //BOTÓN DEPENDENCIAS
     private void boton_dependenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_dependenciasActionPerformed
+        
         visible(2);
     }//GEN-LAST:event_boton_dependenciasActionPerformed
 
+    //BOTÓN EXPORTAR GRAFO
+    private void boton_exportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_exportarActionPerformed
+        
+        
+    }//GEN-LAST:event_boton_exportarActionPerformed
+
+    //BOTÓN AGREGAR TEMA
     private void boton_agregar_temaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_agregar_temaActionPerformed
-        // TODO add your handling code here:
+        
+        
     }//GEN-LAST:event_boton_agregar_temaActionPerformed
 
+    //BOTÓN AGREGAR DEPENDENCIA
     private void boton_agregar_dependenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_agregar_dependenciaActionPerformed
-        // TODO add your handling code here:
+        
+        
     }//GEN-LAST:event_boton_agregar_dependenciaActionPerformed
+
+    //CLICK SOBRE TABLA TEMAS
+    private void tabla_temasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_temasMouseClicked
+        // Doble click:
+        if (evt.getClickCount() == 2) {
+            
+            
+        }
+    }//GEN-LAST:event_tabla_temasMouseClicked
+
+    //CLICK SOBRE TABLA DEPENDENCIAS
+    private void tabla_dependenciasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_dependenciasMouseClicked
+        // Doble click:
+        if (evt.getClickCount() == 2) {
+            
+            
+        }
+    }//GEN-LAST:event_tabla_dependenciasMouseClicked
 
     /**
      * @param args the command line arguments

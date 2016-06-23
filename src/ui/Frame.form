@@ -140,6 +140,9 @@
               <Image iconType="3" name="/imagenes/boton-activo.png"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boton_exportarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -235,6 +238,9 @@
                   <Color blue="ff" green="99" red="66" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabla_temasMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -329,6 +335,9 @@
                   <Color blue="ff" green="99" red="66" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabla_dependenciasMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
