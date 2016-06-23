@@ -1,7 +1,17 @@
 package ui;
 
+import core.DependenciaDAO;
+import core.TemaDAO;
+
+import entidades.Dependencia;
+import entidades.Tema;
+
 import java.awt.Toolkit;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class Frame extends javax.swing.JFrame {
 
@@ -119,11 +129,10 @@ public class Frame extends javax.swing.JFrame {
         tabla_temas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tabla_temas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"OPD", "Organizational Process Definition", null},
-                {"OPF", "Organizational Process Focus", null}
+
             },
             new String [] {
-                "Código", "Nombre", "Descripción"
+                "Sigla", "Nombre", "Descripción"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -185,10 +194,10 @@ public class Frame extends javax.swing.JFrame {
         tabla_dependencias.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tabla_dependencias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"OPD", "OPF"}
+
             },
             new String [] {
-                "Tema A", "Tema B"
+                "Tema", "Correlativo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -258,11 +267,14 @@ public class Frame extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(icono));
         //Centrar frame
         setLocationRelativeTo(null);
+        //Panel inicial
+        visible(0);
         //Header de tablas
         tabla_temas.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tabla_dependencias.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        //Panel inicial
-        visible(0);
+        //Contenido de tablas
+        actualizarTemas();
+        actualizarDependencias();
     }
     
     //Cambio entre paneles
@@ -292,6 +304,55 @@ public class Frame extends javax.swing.JFrame {
         }
     }
     
+    private DefaultTableModel limpiarTabla(JTable tabla) {
+        DefaultTableModel m = (DefaultTableModel)tabla.getModel();
+        int s = m.getRowCount();
+        for(int i=0; i<s;i++){
+            m.removeRow(0);
+        }
+        return m;
+    }
+    
+    private void actualizarTabla(JTable tabla, DefaultTableModel model) {
+        tabla.setRowSorter(null);
+        tabla.setModel(model);
+    }
+    
+    private void actualizarTemas() {
+        //Limpiar tabla
+        DefaultTableModel m = limpiarTabla(tabla_temas);
+        //Contenido tabla
+        TemaDAO handler = new TemaDAO();
+        List<Tema> temas = handler.read();
+        Iterator<Tema> i = temas.iterator();
+        while (i.hasNext()) {
+            Tema t = i.next();
+            Object[] fila = { t.getSigla(), t.getNombre(), t.getDescripcion() };
+            m.addRow(fila);
+        }
+        //Actualizar
+        actualizarTabla(tabla_temas, m);
+    }
+    
+    private void actualizarDependencias() {
+        //Limpiar tabla
+        DefaultTableModel m = limpiarTabla(tabla_dependencias);
+        //Contenido tabla
+        TemaDAO handlerTema = new TemaDAO();
+        DependenciaDAO handler = new DependenciaDAO();
+        List<Dependencia> dependencias = handler.read();
+        Iterator<Dependencia> i = dependencias.iterator();
+        while (i.hasNext()) {
+            Dependencia d = i.next();
+            Tema t1 = handlerTema.read(d.getTema().getId());
+            Tema t2 = handlerTema.read(d.getCorrelativo().getId());
+            Object[] fila = { t1.toString(), t2.toString() };
+            m.addRow(fila);
+        }
+        //Actualizar
+        actualizarTabla(tabla_dependencias, m);
+    }
+    
     //BOTÓN TEMAS
     private void boton_temasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_temasActionPerformed
         visible(1);
@@ -311,14 +372,14 @@ public class Frame extends javax.swing.JFrame {
     //BOTÓN AGREGAR TEMA
     private void boton_agregar_temaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_agregar_temaActionPerformed
         FrameTema.showInputTema();
-        //actualizar temas
+        actualizarTemas();
     }//GEN-LAST:event_boton_agregar_temaActionPerformed
 
     //BOTÓN AGREGAR DEPENDENCIA
     private void boton_agregar_dependenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_agregar_dependenciaActionPerformed
         
         
-        //actualizar dependencias
+        actualizarDependencias();
     }//GEN-LAST:event_boton_agregar_dependenciaActionPerformed
 
     //CLICK SOBRE TABLA TEMAS
@@ -327,7 +388,7 @@ public class Frame extends javax.swing.JFrame {
         if (evt.getClickCount() == 2) {
             
             
-            //actualizar temas
+            actualizarTemas();
         }
     }//GEN-LAST:event_tabla_temasMouseClicked
 
@@ -337,7 +398,7 @@ public class Frame extends javax.swing.JFrame {
         if (evt.getClickCount() == 2) {
             
             
-            //actualizar dependencias
+            actualizarDependencias();
         }
     }//GEN-LAST:event_tabla_dependenciasMouseClicked
 
