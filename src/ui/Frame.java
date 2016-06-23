@@ -5,6 +5,7 @@ import core.TemaDAO;
 
 import entidades.Dependencia;
 import entidades.Tema;
+import input_output.Exportar;
 
 import java.awt.Toolkit;
 import java.net.URL;
@@ -365,7 +366,8 @@ public class Frame extends javax.swing.JFrame {
 
     //BOTÓN EXPORTAR GRAFO
     private void boton_exportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_exportarActionPerformed
-        
+        Exportar exp = new Exportar();
+        exp.exportarPDF();
         
     }//GEN-LAST:event_boton_exportarActionPerformed
 
