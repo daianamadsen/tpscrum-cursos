@@ -37,6 +37,10 @@ public class Dependencia {
 		this.id = id;
 	}
 	
+	public String toString(){
+		return tema.getSigla()+" -> "+correlativo.getSigla()+";";
+	}
+	
 	
 
 }
