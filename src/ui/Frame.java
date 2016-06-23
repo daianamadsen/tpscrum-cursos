@@ -294,7 +294,7 @@ public class Frame extends javax.swing.JFrame {
     
     //BOTÓN TEMAS
     private void boton_temasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_temasActionPerformed
-        
+        FrameTema.showInputTema();
         visible(1);
     }//GEN-LAST:event_boton_temasActionPerformed
 
