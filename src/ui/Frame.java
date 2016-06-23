@@ -398,7 +398,7 @@ public class Frame extends javax.swing.JFrame {
             }
             
             //Grafo
-            Exportar exp = new Exportar();
+            Exportar exp = new Exportar(path, filename);
             exp.exportarPDF();
         
         }

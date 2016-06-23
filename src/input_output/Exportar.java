@@ -9,9 +9,17 @@ public class Exportar {
 	
 	private String dotPath = "c:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
 	private String fileOutputPath = "c:/temp";
+	private String nameOutputFile = "grafo.pdf";
 	
 	
 	public Exportar(){
+		fileOutputPath = "c:/temp";
+		nameOutputFile = "grafo.pdf";
+	}
+	
+	public Exportar(String path, String name){
+		fileOutputPath = path;
+		nameOutputFile = name;
 	}
 	
 	public void exportarPDF(){
@@ -47,7 +55,8 @@ public class Exportar {
 		// 		String repesentationType= "circo";
 		
 		//File out = new File("/tmp/out"+gv.getImageDpi()+"."+ type);   // Linux
-		File out = new File("c:/temp/out." + type);    // Windows
+		//File out = new File("c:/temp/out." + type);    // Windows
+		File out = new File(fileOutputPath+ "/" + nameOutputFile); //windows
 		gv.writeGraphToFile( gv.getGraph(gv.getDotSource(), type, repesentationType), out );
 	}
 }
