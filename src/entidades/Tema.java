@@ -50,7 +50,7 @@ public class Tema {
     
     @Override
     public String toString(){
-        return getSigla() + " - " + getNombre();
+        return getSigla();
     }
     
 }

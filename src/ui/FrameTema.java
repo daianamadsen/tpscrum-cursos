@@ -83,8 +83,12 @@ public class FrameTema {
             return true;
         } else if (option == JOptionPane.NO_OPTION) {
             //Eiminación de Tema
-            TemaDAO handler = new TemaDAO();
-            handler.delete(tema);
+            try {
+                TemaDAO handler = new TemaDAO();
+                handler.delete(tema);
+            } catch(Exception e) {
+                Message.showMessage("No se puede eliminar", "No se puede eliminar el tema porque tiene dependencias.");
+            }
             return true;
         }
         return false;

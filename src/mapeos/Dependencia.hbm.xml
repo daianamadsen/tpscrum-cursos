@@ -9,10 +9,10 @@
       <generator class="identity"/>
     </id>
     <many-to-one name="tema" column="tema" class="entidades.Tema"
-    	not-null="true" cascade="all">
+    	not-null="true">
     </many-to-one>
     <many-to-one name="correlativo" column="correlativo"
-    	class="entidades.Tema" not-null="true" cascade="all">
+    	class="entidades.Tema" not-null="true">
     </many-to-one>
   </class>
 </hibernate-mapping>

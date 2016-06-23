@@ -1,8 +1,6 @@
 package ui;
 
 import java.net.URL;
-import java.util.ArrayList;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -12,86 +10,99 @@ import core.DependenciaDAO;
 import core.TemaDAO;
 import entidades.Dependencia;
 import entidades.Tema;
+import java.util.Iterator;
+import java.util.List;
 
+/**
+ * FrameDependencia permite crear formularios tipo ABM para Dependencia.
+ * Tiene dos tipos de Dialog:
+ *   - Para altas: FrameDependencia.showInputDependencia();
+ *   - Para bajas: FrameDependencia.showInputDependencia(dependencia);
+ */
 public class FrameDependencia extends JFrame {
 
-	 private static final Icon iAdd = icon("/imagenes/icono-add.png");
-	    private static final Icon iEdit = icon("/imagenes/icono-edit.png");
+        private static final Icon iAdd = icon("/imagenes/icono-add.png");
+        private static final Icon iEdit = icon("/imagenes/icono-edit.png");
 	    
-	    private static JComboBox<Tema> cTema;
-	    private static JComboBox<Tema> cCorrelativa;
-	    
-	    private static Object[] buildDialog() {
-	        //Cuadros de texto
-	    	TemaDAO handler = new TemaDAO();
-	    	ArrayList<Tema> lista = (ArrayList<Tema>) handler.read();
-	    	//String[] arrTema = new String[lista.size()];
-	    	//for (int i=0;i<lista.size();i++){
-	    	//	arrTema[i] = lista.get(i).getNombre();
-	    	//}
-	    	Tema[] aux = (Tema[]) lista.toArray();
-	    	cTema = new JComboBox<Tema>(aux);
-	    	cCorrelativa = new JComboBox<Tema>(aux);
-	        //Msg
-	        Object[] msg = {
-	            "Tema:", cTema,
-                    " ",
-	            "Correlativa:", cCorrelativa,
-	            " "
-	        };
-	        return msg;
-	    }
+        private static JComboBox cTema;
+        private static JComboBox cCorrelativa;
             
-            private static Object[] buildDialog(Dependencia dependencia) {
-                //Msg
-                Object[] msg = {
-                    "Tema:" + dependencia.getTema().toString(),
-                    " ",
-                    "Tema correlativo:" + dependencia.getCorrelativo().toString(),
-                    " "
-                };
-                return msg;
+        private static void buildComboBox(JComboBox combo, List<Tema> temas) {
+            Iterator i = temas.iterator();
+            while (i.hasNext()) {
+                combo.addItem(i.next());
             }
+        }
 	    
-	    //nueva dep
-	    public static boolean showInputDependencia() {
-	        //Dialog
-	        Object[] msg = buildDialog();
-	        Object[] options = {"Guardar Dependencia", "Cancelar"};
-	        int option = JOptionPane.showOptionDialog(new java.awt.Frame(), msg, "Nueva Dependencia", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, iAdd, options, options[1]);
-	        if (option == JOptionPane.OK_OPTION) {
-	            //Creación de correlativa
-	        	Tema tema = cTema.getItemAt(cTema.getSelectedIndex());
-	        	Tema corr = cTema.getItemAt(cCorrelativa.getSelectedIndex());
-	            if (tema!= null && corr!=null){ 	
-	            	Dependencia dep = new Dependencia(tema,corr);
-	            	DependenciaDAO handler = new DependenciaDAO();
-	            	handler.create(dep);
-	            	return true;
-	            }
-	        }
-	        return false;
-	    }
+        private static Object[] buildDialog() {
+            //Combos
+            TemaDAO handler = new TemaDAO();
+            List<Tema> lista = handler.read();
+            cTema = new JComboBox();
+            cCorrelativa = new JComboBox();
+            buildComboBox(cTema, lista);
+            buildComboBox(cCorrelativa, lista);
+            //Msg
+            Object[] msg = {
+                "Tema:", cTema,
+                " ",
+                "Correlativa:", cCorrelativa,
+                " "
+            };
+            return msg;
+        }
+            
+        private static Object[] buildDialog(Dependencia dependencia) {
+            TemaDAO handler = new TemaDAO();
+            Tema tema = handler.read(dependencia.getTema().getId());
+            Tema corr = handler.read(dependencia.getCorrelativo().getId());
+            //Msg
+            Object[] msg = {
+                "Tema: " + tema.toString(),
+                "Tema correlativo: " + corr.toString(),
+            };
+            return msg;
+        }
 	    
-	    //eliminar o ver dep
-	    public static boolean showInputDependencia(Dependencia dependencia) {
-	        //Dialog
-	    	Object[] msg = buildDialog(dependencia);
-	        Object[] options = {"Eliminar Dependencia", "Cancelar"};
-	        int option = JOptionPane.showOptionDialog(new java.awt.Frame(), msg, "Eliminar Dependencia", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, iEdit, options, options[1]);
-	        if (option == JOptionPane.OK_OPTION) {
-	            //Eiminación de correlativa
-	            DependenciaDAO handler = new DependenciaDAO();
-	            handler.delete(dependencia);
-	            return true;
-	        }
-	        return false;
-	    }
+        //nueva dep
+        public static boolean showInputDependencia() {
+            //Dialog
+            Object[] msg = buildDialog();
+            Object[] options = {"Guardar Dependencia", "Cancelar"};
+            int option = JOptionPane.showOptionDialog(new java.awt.Frame(), msg, "Nueva Dependencia", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, iAdd, options, options[1]);
+            if (option == JOptionPane.OK_OPTION) {
+                //Creación de correlativa
+                    Tema tema = (Tema)cTema.getSelectedItem();
+                    Tema corr = (Tema)cCorrelativa.getSelectedItem();
+                if (tema!= null && corr!=null){ 	
+                    Dependencia dep = new Dependencia(tema,corr);
+                    DependenciaDAO handler = new DependenciaDAO();
+                    handler.create(dep);
+                    return true;
+                }
+            }
+            return false;
+        }
 	    
-	    private static Icon icon(String path) {
-	        URL resource = Message.class.getResource(path);
-	        return new ImageIcon(resource);
-	    }
+        //eliminar o ver dep
+        public static boolean showInputDependencia(Dependencia dependencia) {
+            //Dialog
+            Object[] msg = buildDialog(dependencia);
+            Object[] options = {"Eliminar Dependencia", "Cancelar"};
+            int option = JOptionPane.showOptionDialog(new java.awt.Frame(), msg, "Eliminar Dependencia", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, iEdit, options, options[1]);
+            if (option == JOptionPane.OK_OPTION) {
+                //Eiminación de correlativa
+                DependenciaDAO handler = new DependenciaDAO();
+                handler.delete(dependencia);
+                return true;
+            }
+            return false;
+        }
+	    
+        private static Icon icon(String path) {
+            URL resource = Message.class.getResource(path);
+            return new ImageIcon(resource);
+        }
 	    
 	
 

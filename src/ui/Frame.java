@@ -132,11 +132,11 @@ public class Frame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Sigla", "Nombre", "Descripción"
+                "Id", "Sigla", "Nombre", "Descripción"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -197,11 +197,11 @@ public class Frame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Tema", "Correlativo"
+                "Id", "Tema", "Correlativo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -274,7 +274,6 @@ public class Frame extends javax.swing.JFrame {
         tabla_dependencias.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         //Contenido de tablas
         actualizarTemas();
-        actualizarDependencias();
     }
     
     //Cambio entre paneles
@@ -327,11 +326,12 @@ public class Frame extends javax.swing.JFrame {
         Iterator<Tema> i = temas.iterator();
         while (i.hasNext()) {
             Tema t = i.next();
-            Object[] fila = { t.getSigla(), t.getNombre(), t.getDescripcion() };
+            Object[] fila = { t.getId(), t.getSigla(), t.getNombre(), t.getDescripcion() };
             m.addRow(fila);
         }
         //Actualizar
         actualizarTabla(tabla_temas, m);
+        actualizarDependencias();
     }
     
     private void actualizarDependencias() {
@@ -346,7 +346,7 @@ public class Frame extends javax.swing.JFrame {
             Dependencia d = i.next();
             Tema t1 = handlerTema.read(d.getTema().getId());
             Tema t2 = handlerTema.read(d.getCorrelativo().getId());
-            Object[] fila = { t1.toString(), t2.toString() };
+            Object[] fila = { d.getId(), t1.toString(), t2.toString() };
             m.addRow(fila);
         }
         //Actualizar
@@ -377,8 +377,7 @@ public class Frame extends javax.swing.JFrame {
 
     //BOTÓN AGREGAR DEPENDENCIA
     private void boton_agregar_dependenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_agregar_dependenciaActionPerformed
-        
-        
+        FrameDependencia.showInputDependencia();
         actualizarDependencias();
     }//GEN-LAST:event_boton_agregar_dependenciaActionPerformed
 
@@ -386,9 +385,14 @@ public class Frame extends javax.swing.JFrame {
     private void tabla_temasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_temasMouseClicked
         // Doble click:
         if (evt.getClickCount() == 2) {
-            
-            
-            actualizarTemas();
+            String idTema = String.valueOf(tabla_temas.getValueAt(tabla_temas.getSelectedRow(), 0));
+            try {
+                int id = Integer.parseInt(idTema);
+                TemaDAO handler = new TemaDAO();
+                Tema tema = handler.read(id);
+                FrameTema.showInputTema(tema);
+                actualizarTemas();
+            } catch (Exception e) {}
         }
     }//GEN-LAST:event_tabla_temasMouseClicked
 
@@ -396,9 +400,14 @@ public class Frame extends javax.swing.JFrame {
     private void tabla_dependenciasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_dependenciasMouseClicked
         // Doble click:
         if (evt.getClickCount() == 2) {
-            
-            
-            actualizarDependencias();
+            String idDependencia = String.valueOf(tabla_dependencias.getValueAt(tabla_dependencias.getSelectedRow(), 0));
+            try {
+                int id = Integer.parseInt(idDependencia);
+                DependenciaDAO handler = new DependenciaDAO();
+                Dependencia dependencia = handler.read(id);
+                FrameDependencia.showInputDependencia(dependencia);
+                actualizarDependencias();
+            } catch (Exception e) {}
         }
     }//GEN-LAST:event_tabla_dependenciasMouseClicked
 
