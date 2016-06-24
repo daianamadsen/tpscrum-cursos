@@ -401,12 +401,10 @@ public class Frame extends javax.swing.JFrame {
             //Grafo
             try {
                 Exportar exportar = new Exportar(path, filename);
-            	//Exportar exportar = new Exportar();
                 exportar.exportarPDF();
             } catch(Exception e) {
                 Message.showError("Error", "No se puede exportar en PDF. Probablemente deba instalar o reinstalar GraphViz.");
             }
-        
         }
     }//GEN-LAST:event_boton_exportarActionPerformed
 
