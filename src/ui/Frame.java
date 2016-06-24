@@ -374,7 +374,8 @@ public class Frame extends javax.swing.JFrame {
 
     //BOTÓN EXPORTAR GRAFO
     private void boton_exportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_exportarActionPerformed
-        JFileChooser chooser = new JFileChooser(); 
+        
+    	JFileChooser chooser = new JFileChooser(); 
         chooser.setCurrentDirectory(new java.io.File(".")); //Posición inicial
         chooser.setDialogTitle("Seleccionar path destino");
         chooser.setAcceptAllFileFilterUsed(false); //No permite selección múltiple
@@ -396,11 +397,12 @@ public class Frame extends javax.swing.JFrame {
                 fullpath = Paths.get(path+filename);
                 existe = Files.exists(fullpath);
             }
-            
+           
             //Grafo
             try {
-                Exportar exp = new Exportar(path, filename);
-                exp.exportarPDF();
+                Exportar exportar = new Exportar(path, filename);
+            	//Exportar exportar = new Exportar();
+                exportar.exportarPDF();
             } catch(Exception e) {
                 Message.showError("Error", "No se puede exportar en PDF. Probablemente deba instalar o reinstalar GraphViz.");
             }

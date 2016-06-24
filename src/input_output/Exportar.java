@@ -7,9 +7,9 @@ import core.DependenciaDAO;
 
 public class Exportar {
 	
-	private String dotPath = "c:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
-	private String fileOutputPath = "c:/temp";
-	private String nameOutputFile = "grafo.pdf";
+	private String dotPath = "c:/Program Files (x86)/Graphviz2.38/bin/dot.exe";
+	private String fileOutputPath;
+	private String nameOutputFile;
 	
 	
 	public Exportar(){
@@ -34,6 +34,7 @@ public class Exportar {
 			gv.addln(i.toString());
 		gv.addln(gv.end_graph());
 		
+		System.out.println("Grafo resultante: ");
 		System.out.println(gv.getDotSource());
 
 		gv.increaseDpi();   // 106 dpi
