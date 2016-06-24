@@ -5,6 +5,7 @@ import java.util.List;
 
 import entidades.Dependencia;
 import core.DependenciaDAO;
+import core.TemaDAO;
 
 
 public class Exportar {
@@ -29,19 +30,16 @@ public class Exportar {
 		DependenciaDAO handler_dependencias = new DependenciaDAO();
 		List<Dependencia> dependencias = new ArrayList<Dependencia>();
 		dependencias.addAll(handler_dependencias.read());
+		TemaDAO handler_temas = new TemaDAO();
 		
 		//GraphViz gv = new GraphViz(); //dotPath y fileOutPath varia de acuerdo al sistema operativo e inclusive dentro del mismo, deberia ser posible seleccionarlo.
 		GraphViz gv = new GraphViz(dotPath, fileOutputPath);
 		gv.addln(gv.start_graph());
 		for (Dependencia i : dependencias){
-			//Dependencia d = handler_dependencias.read(i.getId());
-			//gv.addln(d.toString());
-			
-			//gv.addln(i.getTema().getSigla() + " -> "+ i.getCorrelativo().getSigla() + ";");
+			String sigla_tema = handler_temas.read(i.getTema().getId()).getSigla();
+			String sigla_correlativo = handler_temas.read(i.getCorrelativo().getId()).getSigla();
+			gv.addln(sigla_tema + " -> "+ sigla_correlativo + ";");
 		}
-		gv.addln("A -> B;");
-		gv.addln("A -> C;");
-		gv.addln("C -> R;");
 		gv.addln(gv.end_graph());
 		
 		System.out.println("Grafo resultante: ");
